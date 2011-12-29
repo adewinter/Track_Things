@@ -1,16 +1,43 @@
 Track Things:
 
 Actions:
-Create a thing to track
-enter data for current date time
-back date data
-Ability to track numbers or strings
-- Numbers just graph
-- Strings: (auto/manual) assign numbers to strings
-assign units
-Set a baseline (a line that shows 'normal'
-
-
+	Create a thing to track
+	enter data for current date time
+	back date data
+	Ability to track numbers or strings
+		- Numbers just graph
+		- Strings: (auto/manual) assign numbers to strings
+	assign units
+	Set a baseline (a line that shows 'normal'
+	ability to add notes to data points
+	email integration - send chart name in subject, quantity ([units]) in body
+	set timedelta between data points (minutes, hours, days, weeks, months)
 Stats:
-Auto calculate average over a given timespan
-- For strings for average determine which is most often (bucket average)
+	Auto calculate average over a given timespan
+		- For strings for average determine which is most often (bucket average)
+
+
+
+
+Arch:
+	Data Point
+		- quantity
+		- datetime
+		- note (optional)
+		- unit (optional)
+		- chart -> foreignkey
+		
+	Chart
+		- Name
+		- created_on
+		- last_updated
+		- baseline -> foreignkey
+		- description
+		- span_units : e.g. minutes, hours, days, etc
+		
+	Baseline
+		- quantity
+		- unit (optional)
+		- description
+		- created_on
+		
