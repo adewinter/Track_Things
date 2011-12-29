@@ -1,0 +1,16 @@
+Track Things:
+
+Actions:
+Create a thing to track
+enter data for current date time
+back date data
+Ability to track numbers or strings
+- Numbers just graph
+- Strings: (auto/manual) assign numbers to strings
+assign units
+Set a baseline (a line that shows 'normal'
+
+
+Stats:
+Auto calculate average over a given timespan
+- For strings for average determine which is most often (bucket average)

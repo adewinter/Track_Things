@@ -1,0 +1,5 @@
+*.pyc
+.idea/
+localsettings.py
+static_files/
+media_files/
