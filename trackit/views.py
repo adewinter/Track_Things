@@ -33,7 +33,7 @@ def get_chart_dict(chart, time_start=None, time_end=None):
     else:
         data_points = DataPoint.objects.filter(chart=chart, created_on__lte=time_end, created_on__gte=time_start)
 
-    data_points.order_by(['-created_on'])
+    data_points.order_by('-created_on')
     c = {}
     c["chart"] = chart
     data = []

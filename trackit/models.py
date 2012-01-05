@@ -19,11 +19,11 @@ class Baseline(models.Model):
     description = models.TextField(null=True, blank=True, help_text=DATAPT_NOTE_DESC)
     unit = models.CharField(max_length=255, blank=True, null=True, help_text=UNIT_DESC)
 
-    def chart(self):
-        return Chart.objects.filter(baseline=self)
+#    def chart(self):
+#        return Chart.objects.filter(baseline=self)
 
     def __unicode__(self):
-        return "Baseline Quantity: %s, Units: %s, Chart %s" % (self.quantity, self.unit, self.chart)
+        return "Baseline Quantity: %s, Units: %s" % (self.quantity, self.unit)
 
 class Chart(models.Model):
     UNITSPAN = (

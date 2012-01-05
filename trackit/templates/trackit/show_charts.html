@@ -1,15 +1,114 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Your Charts</title>
-</head>
-<body>
+{% extends "trackit/base.html" %}
 
-    {% for bundle in charts_bundle %}
-        <div id="{{ bundle.chart.name }}">
-            {{ bundle.data }}
-        </div>
-    {% endfor %}
-</body>
-</html>
+
+
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.flot.js"></script>
+    <script>
+
+    Array.max = function( array ){
+        return Math.max.apply( Math, array );
+    };
+    Array.min = function( array ){
+        return Math.min.apply( Math, array );
+    };
+
+    /**
+     * Used for adding a data point to a plot (updates client side and server side)
+     * @param plot - The plot object returned by flot.js when creating a plot
+     * @param current_data - The current series that is plotted
+     * @param point - In the form [x,y]
+     * @param series - Optional.  The series index (if you're plotting more than one line on a graph)
+     *
+     * @return Array new data series. - Array
+     */
+    var add_point = function (plot, current_data, point, series) {
+        if (!series) {
+            series = 0;
+        }
+
+        current_data[series].push(point);
+        console.log('CURRENT DATA', JSON.stringify(current_data));
+        console.log("PLOTS!", plots);
+        plot.setData(current_data);
+        plot.setupGrid();
+        plot.draw();
+
+        return current_data;
+    }
+
+    /**
+     * A more convenient way of adding points.
+     * @param chart_name - String name of chart
+     * @param data_point - Quantity to be added, uses default point unit length.
+     */
+    var add_point_easy = function (chart_name, data_point) {
+
+    }
+
+    plots = {};
+
+    $(document).ready(
+        function () {
+            var data = [];
+            {% for d in charts_bundle.0.data %}
+                data.push({{ d.0 }});
+            {% endfor %}
+            var plot_data = [];
+            {% for d in charts_bundle.0.data %}
+                plot_data.push([{{ forloop.counter0 }}, {{ d.0 }}]);
+            {% endfor %}
+            plot_data = [plot_data];
+//            var options =  { yaxis: { max: Array.max(data) + 1 }}
+
+            var options = {};
+//            $("#charts_info").append("<br />Chart Data: " + JSON.stringify(plot_data) + "<br /> Chart Options: " + JSON.stringify(options));
+            var plot = $.plot($("#chart_graph"), plot_data, options);
+            plots["{{ charts_bundle.0.chart.name }}"] = plot;
+            plot_data = add_point(plot, plot_data, [7,9]);
+        }
+    );
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+
+
+{#<div id="charts_info">#}
+{#Charts bundle: <br />#}
+{#{{ charts_bundle }}#}
+{##}
+{#bbb#}
+{#{{ charts_bundle.0.chart.baseline }}#}
+{#<br />#}
+{#ddd#}
+{##}
+{##}
+{#<br />#}
+{#    {% for bundle in charts_bundle %}#}
+{#        <div id="{{ bundle.chart.name }}">#}
+{#            <h1>Name: {{ bundle.chart.name }}</h1>#}
+{#            <h2>Baseline Quantity: {{ bundle.chart.baseline.quantity }}</h2>#}
+{#            <h2>Basline Unit: {{ bundle.chart.baseline.unit }}</h2>#}
+{#            <div id="{{ bundle.chart.name }}_data">#}
+{#            Data: <br />#}
+{#            {% for d in bundle.data %}#}
+{#                ======================= <br />#}
+{#                Quantity: {{ d.0 }} <br />#}
+{#                Date added: {{ d.1 }} <br />#}
+{#                ======================= <br />#}
+{#            {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{##}
+{#</div>#}
+
+<div id="chart_graph" style="width:600px;height:300px">s</div>
+
+
+{% endblock %}
