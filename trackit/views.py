@@ -12,11 +12,12 @@ def show_charts(request, userid=None, time_start=None, time_end=None):
     else:
         charts = Chart.objects.filter(user__id=userid)
 
+    time_start = request.GET.get("time_start", None)
     charts_info = []
     for chart in charts:
         charts_info.append(get_chart_dict(chart, time_start, time_end))
 
-    context["charts"] = charts_info
+    context["charts_bundle"] = charts_info
     return render_to_response("trackit/show_charts.html", context, context_instance=RequestContext(request))
 
 def get_chart_dict(chart, time_start=None, time_end=None):
@@ -37,6 +38,7 @@ def get_chart_dict(chart, time_start=None, time_end=None):
     c["chart"] = chart
     data = []
     for pt in data_points:
-        pass
+        data.append([pt.quantity, pt.created_on])
 
-    return None
+    c["data"] = data
+    return c

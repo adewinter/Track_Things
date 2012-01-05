@@ -6,9 +6,9 @@
 </head>
 <body>
 
-    {% for chart in charts %}
-        <div id="{{ chart.name }}">
-            {{ chart }}
+    {% for bundle in charts_bundle %}
+        <div id="{{ bundle.chart.name }}">
+            {{ bundle.data }}
         </div>
     {% endfor %}
 </body>

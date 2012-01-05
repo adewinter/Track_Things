@@ -3,3 +3,5 @@
 localsettings.py
 static_files/
 media_files/
+*.sqlite3
+logs/

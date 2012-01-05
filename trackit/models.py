@@ -41,7 +41,7 @@ class Chart(models.Model):
     description = models.TextField(blank=True, null=True, help_text="Chart Description")
     timespan_units = models.CharField(max_length=50, choices=UNITSPAN, default='days')
     baseline = models.ForeignKey(Baseline)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User)  
 
     def __unicode__(self):
         return "Chart: %s, last_updated: %s" % (self.name, self.last_updated)
